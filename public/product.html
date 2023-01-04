@@ -184,7 +184,7 @@
             for (let i = 0; i < listProduct.length; i++) {
                 drawTable += `<tr>
                             <td>${i + 1}</td>
-                            <td><img src="${listProduct[i].image}" width="100"> </td>
+                            <td><img src="${listProduct[i].image}" width="100"></td>
                             <td>${listProduct[i].name}</td>
                             <td>${listProduct[i].price}</td>
                             <td><button class="btn btn-primery" onclick="showUpdateModal(${listProduct[i].id})" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="${listProduct.name}"><i class="bi bi-pen"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
@@ -221,6 +221,7 @@
                 localStorage.setItem("listProduct", JSON.stringify(listProduct))
                 alert('Đã Update thành công')
                 showListProduct()
+                location.reload()
             }
 
         }
