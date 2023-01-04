@@ -93,7 +93,8 @@
             <nav class="navbar navbar-light">
                 <div class="container-fluid">
                     <form class="d-flex">
-                        <input id="search" style="width: 500px" class="form-control me-2 " type="search"
+                        <input id="search" oninput="actionSearch()" style="width: 500px" class="form-control me-2 "
+                               type="search"
                                placeholder=" What are you find? "
                                aria-label="Search">
                         <button onclick="" class="btn btn-light" type="submit">
@@ -252,12 +253,11 @@
 </footer>
 <!--phần js và bootrap js-->
 <script>
-
     let listProduct = JSON.parse(localStorage.getItem("listProduct"))
-    let listSearch = [];
     if (listProduct === null) {
         listProduct = [];
     }
+    let listSearch = [];
 
     function showDisplay() {
         let drawDisplay = '';
@@ -267,7 +267,39 @@
                     <img class="responsive" src="${listProduct[i].image}" alt="Nature"><br>
                     <a>${listProduct[i].name}</a>
                     <p>${'Price: ' + listProduct[i].price + ' $'}</p>
-                    <p><button style="visibility:hidden" class="buyButton btn btn-outline-warning" onclick="themvao(${listProduct[i].id})">Mua</button></p>
+                    <p><button style="visibility: hidden" class="buyButton btn btn-outline-warning" onclick="themvao(${listProduct[i].id})">BUY</button></p>
+                </div>
+            `
+        }
+
+        document.getElementById('display').innerHTML = drawDisplay;
+    }
+
+
+    function actionSearch() {
+        let search = document.getElementById('search').value;
+        if (search.trim() == "") {
+            showDisplay()
+        } else {
+            listSearch = [];
+            for (let i = 0; i < listProduct.length; i++) {
+                if (listProduct[i].name.toLowerCase().search(search.toLowerCase()) !== -1) {
+                    listSearch.push(listProduct[i])
+                }
+            }
+            showListSearch();
+        }
+    }
+
+    function showListSearch() {
+        let drawDisplay = '';
+        for (let i = 0; i < listSearch.length; i++) {
+            drawDisplay += `
+                    <div class="col-4">
+                    <img class="responsive" src="${listSearch[i].image}" alt="Nature"><br>
+                    <a>${listSearch[i].name}</a>
+                    <p>${'Price: ' + listSearch[i].price + ' $'}</p>
+                    <p><button class="buyButton btn btn-outline-warning" onclick="themvao(${listSearch[i].id})">BUY</button></p>
                 </div>
             `
         }
@@ -276,6 +308,8 @@
     }
 
     showDisplay()
+
+
 </script>
 <script>
     let listCart = JSON.parse(localStorage.getItem('list_cart'))
